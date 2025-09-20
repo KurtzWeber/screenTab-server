@@ -1,9 +1,11 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import cookie from "cookie-parser";
 import helmet from "helmet";
 import morgan from "morgan";
-import adminRoutes from "./routes/admin.routes.js";
+import userRoutes from "./routes/userRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 
 const app = express();
 
@@ -22,11 +24,9 @@ app.use(express.json({ limit: "1mb" }));
 app.use(cookie());
 app.use(morgan("tiny"));
 
-app.get("/health", (r, s) => s.send("ok"));
+app.use("/", userRoutes);
+app.use("/chat", chatRoutes);
 
-app.use("/admin", adminRoutes);
-
-// 404
 app.use((req, res) => {
     res.status(404).json({
         ok: false,
@@ -35,7 +35,6 @@ app.use((req, res) => {
     });
 });
 
-// 500
 app.use((err, req, res, next) => {
     // eslint-disable-next-line no-console
     console.error(err);

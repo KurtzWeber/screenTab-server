@@ -1,6 +1,6 @@
-import winston from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
-import clc from "cli-color"; // Import the cli-color package
+import clc from "cli-color";
+import winston from "winston";
 
 const logColors = {
     error: clc.red,
